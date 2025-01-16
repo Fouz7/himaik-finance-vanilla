@@ -1,0 +1,21 @@
+.header {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem;
+    padding: 0.6rem 1rem 0.6rem 1rem;
+}
+
+.dashboard-button img,
+.dashboard-button svg {
+    height: 1.8rem;
+}
+
+.dashboard-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

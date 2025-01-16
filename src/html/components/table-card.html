@@ -1,0 +1,54 @@
+<div class="cardT">
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab(event, 'income')">Income</button>
+        <button class="tab-button" onclick="openTab(event, 'transaction')">Transaction</button>
+        <div class="underline"></div>
+    </div>
+    <div id="income" class="tab-content active">
+        <!-- Content for Income tab -->
+        <table id="income-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Nominal</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Income data will be inserted here -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prev-page" onclick="changePage(-1)" disabled>
+                <img src="public/left_arrow.svg" alt="Previous Page">
+            </button>
+            <button id="next-page" onclick="changePage(1)">
+                <img src="public/right_arrow.svg" alt="Next Page">
+            </button>
+        </div>
+    </div>
+    <div id="transaction" class="tab-content">
+        <!-- Content for Transaction tab -->
+        <table id="transaction-table">
+            <thead>
+                <tr>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                    <th>Balance</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Transaction data will be inserted here -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prev-transaction-page" onclick="changeTransactionPage(-1)" disabled>
+                <img src="public/left_arrow.svg" alt="Previous Page">
+            </button>
+            <button id="next-transaction-page" onclick="changeTransactionPage(1)" disabled>
+                <img src="public/right_arrow.svg" alt="Next Page">
+            </button>
+        </div>
+    </div>
+</div>

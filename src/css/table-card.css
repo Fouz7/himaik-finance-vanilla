@@ -1,0 +1,107 @@
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.cardT {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    padding: 3rem;
+    height: calc(78vh + 2rem);
+    animation: slideInFromRight 0.5s ease-out;
+    position: relative;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.tab-button {
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+    background-color: transparent;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tbody {
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 6rem);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.pagination button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: opacity 0.3s, filter 0.3s;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+}
+
+.pagination button:disabled img {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: transparent;
+}
+
+.pagination button img {
+    width: 32px;
+    height: 32px;
+}
+
+@media (max-width: 768px) {
+    .cardT {
+        height: 45vh;
+        background-color: var(--secondary-background-color);
+        color: var(--primary);
+    }
+
+    .tabs{
+        border-bottom: 1px solid var(--primary);
+    }
+
+    .tab-button {
+        color: var(--primary);
+        font-size: medium;
+    }
+}
