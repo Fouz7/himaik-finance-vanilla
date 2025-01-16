@@ -42,6 +42,14 @@
     background-color: transparent;
 }
 
+.tab-content {
+    display: none; /* Hide all tab contents by default */
+}
+
+.tab-content.active {
+    display: block; /* Show the active tab content */
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -96,7 +104,7 @@ tbody {
         color: var(--primary);
     }
 
-    .tabs{
+    .tabs {
         border-bottom: 1px solid var(--primary);
     }
 

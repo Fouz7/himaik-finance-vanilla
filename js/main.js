@@ -193,16 +193,16 @@ function openTab(evt, tabName) {
     evt.currentTarget.classList.add("active");
 }
 
-
 // Function to change page
 function changePage(direction) {
     const newPage = currentPage + direction;
     fetchIncome(newPage);
 }
 
-
 // Initialize the first tab to be visible
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("income").style.display = "block";
-    document.getElementById("income").classList.add("active");
+    const defaultTab = document.querySelector(".tab-button.active") || document.querySelector(".tab-button");
+    if (defaultTab) {
+        defaultTab.click();
+    }
 });
