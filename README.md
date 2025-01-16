@@ -1,12 +1,11 @@
-# Project Name
+# HIMAIK FINANCE
 
 ## Overview
-This project is designed to [brief description of what the project does].
+This project is designed to monitor the HIMAIK finance.
 
 ## Features
-- Feature 1
-- Feature 2
-- Feature 3
+- View the data
+- Add the data
 
 ## Installation
 To install this project, follow these steps:
@@ -17,14 +16,6 @@ To install this project, follow these steps:
     ```
 2. Navigate to the project directory:
     ```sh
-    cd yourproject
-    ```
-3. Install the dependencies:
-    ```sh
-    npm install
+    cd himaik-finance-vanilla
     ```
 
-## Usage
-To use this project, run the following command:
-```sh
-npm start
