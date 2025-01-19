@@ -13,6 +13,10 @@ main {
     margin: 0.5rem 0.5rem 0.5rem 0.5rem;
 }
 
+.hidden {
+    display: none;
+}
+
 .dashboard-container {
     background-color: var(--background-color);
     border-radius: 12px;

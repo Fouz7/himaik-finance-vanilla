@@ -66,6 +66,7 @@ function createCard(title, body) {
 
 // Function to show containers
 function showContainers() {
+    document.querySelector('.dashboard-container').classList.remove('hidden');
     document.getElementById('cards-container').style.display = 'block';
     document.getElementById('table-container').style.display = 'block';
 }
@@ -106,8 +107,15 @@ async function fetchPaginatedIncome(pageNumber = 1) {
             incomeTableBody.appendChild(row);
         });
 
-        document.getElementById('prev-income-page').disabled = pageNumber === 1;
-        document.getElementById('next-income-page').disabled = data.length < pageSize;
+        const prevIncomePageButton = document.getElementById('prev-income-page');
+        const nextIncomePageButton = document.getElementById('next-income-page');
+
+        if (prevIncomePageButton) {
+            prevIncomePageButton.disabled = pageNumber === 1;
+        }
+        if (nextIncomePageButton) {
+            nextIncomePageButton.disabled = data.length < pageSize;
+        }
 
         currentPage = pageNumber;
 
