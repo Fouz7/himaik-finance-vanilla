@@ -96,7 +96,6 @@ function fetchIncome(pageNumber = 1) {
 
             const totalNominal = data.reduce((acc, income) => acc + income.nominal, 0);
             
-            // Tampilkan table-container setelah data berhasil di-fetch
             document.getElementById('table-container').style.display = 'block';
 
             return { title: 'Total Income', body: `${totalNominal}` };
@@ -163,7 +162,7 @@ Promise.all([fetchTransactions(), fetchIncome(), fetchOutcome()])
         results.forEach(result => {
             createCard(result.title, result.body);
         });
-        showContainers(); // Show containers after data is fetched and cards are created
+        showContainers();
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -172,7 +171,7 @@ fetch('html/components/table-card.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('table-container').innerHTML = data;
-        fetchPaginatedTransactions(); // Fetch paginated transactions after table component is loaded
+        fetchPaginatedTransactions();
     })
     .catch(error => console.error('Error loading component:', error));
 
