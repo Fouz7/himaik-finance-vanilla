@@ -7,11 +7,13 @@
     align-items: center;
     margin: 0.5rem;
     padding: 0.6rem 1rem 0.6rem 1rem;
+    width: calc(100vw - 1rem);
 }
 
 .dashboard-button img,
 .dashboard-button svg {
-    height: 1.8rem;
+
+    height: 1.5rem;
 }
 
 .dashboard-button {

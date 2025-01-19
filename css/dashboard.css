@@ -1,0 +1,167 @@
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main {
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.dashboard-container {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    padding: 1rem;
+    width: calc(100vw - 1rem);
+    opacity: 0;
+    transform: translateY(100px);
+}
+
+.dashboard-container.visible {
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.transaction-info-container {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+}
+
+.tables {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.transaction-value {
+    font-size: 4em;
+    font-weight: 900;
+}
+
+.transaction-label {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.income .transaction-value,
+.income .transaction-label {
+    color: var(--income-color);
+}
+
+.outcome .transaction-value,
+.outcome .transaction-label {
+    color: var(--outcome-color);
+}
+
+.transaction-table{
+    width: 100%;
+}
+
+.transaction-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+.dashboard-table{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10rem;
+}
+
+.dashboard-table,
+.income-table,
+.transaction-table {
+    background-color: var(--secondary-background-color);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--primary);
+}
+
+.income-table th,
+.income-table td,
+.transaction-table th,
+.transaction-table td {
+    padding: 0 2.5rem;
+}
+
+
+.dashboard-pagination {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.dashboard-pagination button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: opacity 0.3s, filter 0.3s;
+}
+
+.dashboard-pagination button:disabled img {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.dashboard-pagination button img {
+    width: 32px;
+    height: 32px; 
+}
+
+.admin-button{
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+
+.admin-button button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.admin-button button img {
+    width: 32px;
+    height: 32px; 
+}
+
+
+button {
+    margin-top: 1rem;
+}
+
+.divider {
+    background-color: var(--primary);
+    height: 2px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}

@@ -1,0 +1,24 @@
+<div class="income-table">
+    <h2>Income</h2>
+    <div class="divider"></div>
+    <table id="income-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Nominal</th>
+                <th>Transfer Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Income data will be populated here -->
+        </tbody>
+    </table>
+    <div class="dashboard-pagination">
+        <button id="prev-income-page" onclick="changeIncomePage(-1)" disabled>
+            <img src="public/left_arrow.svg" alt="Previous Page">
+        </button>
+        <button id="next-income-page" onclick="changeIncomePage(1)" disabled>
+            <img src="public/right_arrow.svg" alt="Next Page">
+        </button>
+    </div>
+</div>

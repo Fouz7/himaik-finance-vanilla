@@ -10,6 +10,7 @@ function loadCSS(url) {
 }
 
 // Load CSS the CSS files
+loadCSS('css/header.css');
 loadCSS('css/card.css');
 loadCSS('css/table-card.css');
 
@@ -18,7 +19,24 @@ fetch('html/components/header.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('header').innerHTML = data;
-        loadCSS('css/header.css');
+
+        // Change the image source and button onclick based on the current page
+        const headerImage = document.getElementById('header-image');
+        const headerButton = document.getElementById('header-button');
+        if (window.location.pathname.includes('dashboard.html')) {
+            headerImage.src = 'public/logout.svg';
+            headerImage.alt = 'Logout Button';
+            headerButton.onclick = () => {
+                document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+                window.location.href = 'index.html';
+            };
+        } else {
+            headerImage.src = 'public/login.svg';
+            headerImage.alt = 'Login Button';
+            headerButton.onclick = () => {
+                window.location.href = 'login.html';
+            };
+        }
     })
     .catch(error => console.error('Error loading component:', error));
 
@@ -52,102 +70,109 @@ function showContainers() {
     document.getElementById('table-container').style.display = 'block';
 }
 
-// Fetch transactions from the API
-function fetchTransactions() {
-    return fetch('https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactions')
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
-                const lastTransaction = data[data.length - 1];
-                const lastBalance = lastTransaction.balance;
-                return { title: 'Balance', body: `${lastBalance}` };
-            } else {
-                return { title: 'Balance', body: 'No transactions found.' };
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching transactions:', error);
-            return { title: 'Balance', body: 'Error fetching transactions.' };
-        });
+// Fetch balance from the API
+async function fetchBalance() {
+    try {
+        const response = await fetch('https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactions');
+        const data = await response.json();
+        if (data.length > 0) {
+            const lastTransaction = data[data.length - 1];
+            const lastBalance = lastTransaction.balance;
+            return { title: 'Balance', body: `${lastBalance}` };
+        } else {
+            return { title: 'Balance', body: 'No transactions found.' };
+        }
+    } catch (error) {
+        console.error('Error fetching transactions:', error);
+        return { title: 'Balance', body: 'Error fetching transactions.' };
+    }
 }
 
 // Fetch income from the API and populate the table
-function fetchIncome(pageNumber = 1) {
-    return fetch(`https://himaikfinance.azurewebsites.net/IncomeData/GetAllIncomeData?nominalSortOrder=asc&pageNumber=${pageNumber}&pageSize=${pageSize}`)
-        .then(response => response.json())
-        .then(data => {
-            const incomeTableBody = document.querySelector('#income-table tbody');
-            incomeTableBody.innerHTML = '';
+async function fetchPaginatedIncome(pageNumber = 1) {
+    try {
+        const response = await fetch(`https://himaikfinance.azurewebsites.net/IncomeData/GetAllIncomeData?nominalSortOrder=asc&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+        const data = await response.json();
+        const incomeTableBody = document.querySelector('#income-table tbody');
+        incomeTableBody.innerHTML = '';
 
-            data.forEach(income => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${income.name}</td>
-                    <td>${income.nominal}</td>
-                    <td>${new Date(income.transferDate).toLocaleDateString()}</td>
-                `;
-                incomeTableBody.appendChild(row);
-            });
-
-            document.getElementById('prev-page').disabled = pageNumber === 1;
-            document.getElementById('next-page').disabled = data.length < pageSize;
-
-            currentPage = pageNumber;
-
-            const totalNominal = data.reduce((acc, income) => acc + income.nominal, 0);
-            
-            document.getElementById('table-container').style.display = 'block';
-
-            return { title: 'Total Income', body: `${totalNominal}` };
-        })
-        .catch(error => {
-            console.error('Error fetching income:', error);
-            return { title: 'Total Income', body: 'Error fetching income.' };
+        data.forEach(income => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${income.name}</td>
+                <td>${income.nominal}</td>
+                <td>${new Date(income.transferDate).toLocaleDateString()}</td>
+            `;
+            incomeTableBody.appendChild(row);
         });
+
+        document.getElementById('prev-income-page').disabled = pageNumber === 1;
+        document.getElementById('next-income-page').disabled = data.length < pageSize;
+
+        currentPage = pageNumber;
+
+        const totalNominal = data.reduce((acc, income) => acc + income.nominal, 0);
+        return { title: 'Total Income', body: `${totalNominal}` };
+    } catch (error) {
+        console.error('Error fetching income:', error);
+        return { title: 'Total Income', body: 'Error fetching income.' };
+    }
 }
 
+// Fetch income from the API
+async function fetchIncome() {
+    try {
+        const response = await fetch('https://himaikfinance.azurewebsites.net/IncomeData/GetAllIncomeData');
+        const data = await response.json();
+        const totalNominal = data.reduce((acc, income) => acc + income.nominal, 0);
+        return { title: 'Total Income', body: `${totalNominal}` };
+    } catch (error) {
+        console.error('Error fetching income:', error);
+        return { title: 'Total Income', body: 'Error fetching income.' };
+    }
+}
+
+
+
 // Fetch outcome from the API
-function fetchOutcome() {
-    return fetch('https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactions')
-        .then(response => response.json())
-        .then(data => {
-            const totalDebit = data.reduce((acc, transaction) => acc + transaction.debit, 0);
-            return { title: 'Total Outcome', body: `${totalDebit}` };
-        })
-        .catch(error => {
-            console.error('Error fetching outcome:', error);
-            return { title: 'Total Outcome', body: 'Error fetching outcome.' };
-        });
+async function fetchOutcome() {
+    try {
+        const response = await fetch('https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactions');
+        const data = await response.json();
+        const totalDebit = data.reduce((acc, transaction) => acc + transaction.debit, 0);
+        return { title: 'Total Outcome', body: `${totalDebit}` };
+    } catch (error) {
+        console.error('Error fetching outcome:', error);
+        return { title: 'Total Outcome', body: 'Error fetching outcome.' };
+    }
 }
 
 // Fetch paginated transactions from the API and populate the transaction tab
-function fetchPaginatedTransactions(pageNumber = 1) {
-    return fetch(`https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactionsPaginated?pageNumber=${pageNumber}&pageSize=${pageSize}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            const transactionTableBody = document.querySelector('#transaction-table tbody');
-            transactionTableBody.innerHTML = '';
+async function fetchPaginatedTransactions(pageNumber = 1) {
+    try {
+        const response = await fetch(`https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactionsPaginated?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+        const data = await response.json();
+        const transactionTableBody = document.querySelector('#transaction-table tbody');
+        transactionTableBody.innerHTML = '';
 
-            data.forEach(transaction => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+        data.forEach(transaction => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
                     <td>${transaction.debit}</td>
                     <td>${transaction.credit}</td>
                     <td>${transaction.balance}</td>
                     <td>${transaction.notes}</td>
                 `;
-                transactionTableBody.appendChild(row);
-            });
-
-            document.getElementById('prev-transaction-page').disabled = pageNumber === 1;
-            document.getElementById('next-transaction-page').disabled = data.length < pageSize;
-
-            currentPage = pageNumber;
-        })
-        .catch(error => {
-            console.error('Error fetching paginated transactions:', error);
+            transactionTableBody.appendChild(row);
         });
+
+        document.getElementById('prev-transaction-page').disabled = pageNumber === 1;
+        document.getElementById('next-transaction-page').disabled = data.length < pageSize;
+
+        currentPage = pageNumber;
+    } catch (error) {
+        console.error('Error fetching paginated transactions:', error);
+    }
 }
 
 // Function to change transaction page
@@ -156,8 +181,14 @@ function changeTransactionPage(direction) {
     fetchPaginatedTransactions(newPage);
 }
 
+// Function to change income page
+function changeIncomePage(direction) {
+    const newPage = currentPage + direction;
+    fetchPaginatedIncome(newPage);
+}
+
 // Fetch all data and create cards
-Promise.all([fetchTransactions(), fetchIncome(), fetchOutcome()])
+Promise.all([fetchBalance(), fetchPaginatedIncome(), fetchOutcome()])
     .then(results => {
         results.forEach(result => {
             createCard(result.title, result.body);
@@ -165,6 +196,58 @@ Promise.all([fetchTransactions(), fetchIncome(), fetchOutcome()])
         showContainers();
     })
     .catch(error => console.error('Error fetching data:', error));
+
+
+
+// Function to update transaction info
+function updateTransactionInfo() {
+    Promise.all([fetchBalance(), fetchIncome(), fetchOutcome()])
+        .then(results => {
+            const transactionInfo = document.getElementById('transaction-info');
+            transactionInfo.innerHTML = '';
+
+            results.forEach(result => {
+                const stackDiv = document.createElement('div');
+                stackDiv.className = 'stack';
+
+                if (result.title === 'Total Income') {
+                    stackDiv.classList.add('income');
+                } else if (result.title === 'Total Outcome') {
+                    stackDiv.classList.add('outcome');
+                }
+
+                const valueSpan = document.createElement('span');
+                valueSpan.className = 'transaction-value';
+                valueSpan.textContent = result.body;
+
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'transaction-label';
+                labelSpan.textContent = result.title;
+
+                stackDiv.appendChild(valueSpan);
+                stackDiv.appendChild(labelSpan);
+                transactionInfo.appendChild(stackDiv);
+            });
+
+            // Add the visible class to the dashboard container after updating transaction info
+            document.querySelector('.dashboard-container').classList.add('visible');
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+// Fetch the dashboard container component
+fetch('html/components/dashboard-container.html')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('dashboard-container').innerHTML = data;
+        return fetch('html/components/transaction-info.html');
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('transaction-info').innerHTML = data;
+        updateTransactionInfo(); 
+    })
+    .catch(error => console.error('Error loading component:', error));
 
 // Fetch the table component
 fetch('html/components/table-card.html')
@@ -195,7 +278,7 @@ function openTab(evt, tabName) {
 // Function to change page
 function changePage(direction) {
     const newPage = currentPage + direction;
-    fetchIncome(newPage);
+    fetchPaginatedIncome(newPage);
 }
 
 // Initialize the first tab to be visible

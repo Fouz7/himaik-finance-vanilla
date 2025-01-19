@@ -5,6 +5,8 @@
     --background-color: #F1E2B8;
     --secondary-background-color: #765E41;
     --text-color: #421010;
+    --income-color: #267A0A;
+    --outcome-color: #A42222;
 }
 
 
@@ -17,6 +19,7 @@
 body {
     background-color: #9C8F7C;
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
 }
 
 main {

@@ -36,10 +36,10 @@
 
 .card-income .card-body,
 .card-income .card-title-text {
-    color: #267A0A;
+    color: var(--income-color);
 }
 
 .card-outcome .card-body,
 .card-outcome .card-title-text {
-    color: #A42222;
+    color: var(--outcome-color);
 }

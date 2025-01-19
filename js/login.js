@@ -1,3 +1,4 @@
+// Function to load CSS dynamically
 function loadCSS(url) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -5,17 +6,21 @@ function loadCSS(url) {
     document.head.appendChild(link);
 }
 
+loadCSS('css/login.css');
+
+// function to load the login card
 fetch('html/components/login-card.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('login-card').innerHTML = data;
-        loadCSS('css/login.css');
 
-        const loginButton = document.getElementById('login-button');
+        const loginButton = document.getElementById('login-button'); // Get the login button
+        // Add an event listener to the login button
         loginButton.addEventListener('click', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
+            // Fetch the login API
             fetch('https://himaikfinance.azurewebsites.net/User/LoginUser', {
                 method: 'POST',
                 headers: {
@@ -23,13 +28,17 @@ fetch('html/components/login-card.html')
                 },
                 body: JSON.stringify({ username, password })
             })
-            .then(response => {
+            // Check the response status if it's 200 then return the response as JSON
+            .then(async response => {
                 if (response.status === 200) {
                     return response.json();
                 } else {
-                    throw new Error('Invalid username or password');
+                    // If the response status is not 200 then throw an error with the response text
+                    const errorText = await response.text();
+                    throw new Error(errorText || 'Invalid username or password');
                 }
             })
+            // Set the token in the cookie and redirect to the dashboard
             .then(data => {
                 const token = data.token;
                 document.cookie = `token=${token}; path=/; secure`;
