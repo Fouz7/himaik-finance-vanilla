@@ -1,3 +1,17 @@
+// Check for token in cookies
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+const token = getCookie('token');
+if (!token) {
+    window.location.href = 'index.html';
+    return;
+}
+
 // Function to load CSS dynamically
 function loadCSS(url) {
     const link = document.createElement('link');
