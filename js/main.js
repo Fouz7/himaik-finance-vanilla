@@ -66,7 +66,6 @@ function createCard(title, body) {
 
 // Function to show containers
 function showContainers() {
-    document.querySelector('.dashboard-container').classList.remove('hidden');
     document.getElementById('cards-container').style.display = 'block';
     document.getElementById('table-container').style.display = 'block';
 }
@@ -130,10 +129,10 @@ async function fetchPaginatedIncome(pageNumber = 1) {
 // Fetch income from the API
 async function fetchIncome() {
     try {
-        const response = await fetch('https://himaikfinance.azurewebsites.net/IncomeData/GetAllIncomeData');
+        const response = await fetch('https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactions');
         const data = await response.json();
-        const totalNominal = data.reduce((acc, income) => acc + income.nominal, 0);
-        return { title: 'Total Income', body: `${totalNominal}` };
+        const totalIncome = data.reduce((acc, transaction) => acc + transaction.credit, 0);
+        return { title: 'Total Income', body: `${totalIncome}` };
     } catch (error) {
         console.error('Error fetching income:', error);
         return { title: 'Total Income', body: 'Error fetching income.' };
@@ -196,7 +195,7 @@ function changeIncomePage(direction) {
 }
 
 // Fetch all data and create cards
-Promise.all([fetchBalance(), fetchPaginatedIncome(), fetchOutcome()])
+Promise.all([fetchBalance(), fetchIncome(), fetchOutcome()])
     .then(results => {
         results.forEach(result => {
             createCard(result.title, result.body);
@@ -263,8 +262,14 @@ fetch('html/components/table-card.html')
     .then(data => {
         document.getElementById('table-container').innerHTML = data;
         fetchPaginatedTransactions();
+        fetchPaginatedIncome();
+
+        // Add event listeners for next and prev buttons
+        document.getElementById('prev-income-page').addEventListener('click', () => changeIncomePage(-1));
+        document.getElementById('next-income-page').addEventListener('click', () => changeIncomePage(1));
     })
     .catch(error => console.error('Error loading component:', error));
+
 
 // Function to handle tab switching
 function openTab(evt, tabName) {
@@ -288,6 +293,7 @@ function changePage(direction) {
     const newPage = currentPage + direction;
     fetchPaginatedIncome(newPage);
 }
+
 
 // Initialize the first tab to be visible
 document.addEventListener("DOMContentLoaded", function() {
