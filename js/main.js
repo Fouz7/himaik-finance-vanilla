@@ -302,5 +302,3 @@ document.addEventListener("DOMContentLoaded", function() {
         defaultTab.click();
     }
 });
-
-console.log('Main script loaded');

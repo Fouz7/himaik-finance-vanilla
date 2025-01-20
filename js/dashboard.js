@@ -52,9 +52,49 @@ fetch('html/components/dashboard-container.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('transaction-table-container').innerHTML = data;
-        document.querySelector('.dashboard-container').classList.remove('hidden'); // Remove hidden class here
+        document.querySelector('.dashboard-container').classList.remove('hidden');
         document.querySelector('.dashboard-container').classList.add('visible');
         fetchPaginatedIncome();
         fetchPaginatedTransactions();
     })
     .catch(error => console.error('Error loading component:', error));
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM fully loaded and parsed');
+    
+        // Function to show dialog
+        function showDialog(formUrl) {
+            console.log('Showing dialog with form:', formUrl);
+            fetch('html/components/dialog.html')
+                .then(response => response.text())
+                .then(dialogHtml => {
+                    document.getElementById('dialog-container').innerHTML = dialogHtml;
+                    return fetch(formUrl);
+                })
+                .then(response => response.text())
+                .then(formHtml => {
+                    document.getElementById('dialog-form-container').innerHTML = formHtml;
+                    document.querySelector('.dialog').classList.add('visible');
+                    document.querySelector('.close-button').addEventListener('click', closeDialog);
+                    console.log('Dialog shown successfully');
+                })
+                .catch(error => console.error('Error loading dialog:', error));
+        }
+    
+        // Function to close dialog
+        function closeDialog() {
+            document.querySelector('.dialog').classList.remove('visible');
+            console.log('Dialog closed');
+        }
+    
+        // Add event listeners for buttons
+        document.getElementById('add-income').addEventListener('click', () => {
+            showDialog('html/components/income-form.html');
+        });
+    
+        document.getElementById('add-transactions').addEventListener('click', () => {
+            showDialog('html/components/transaction-form.html');
+        });
+    
+        console.log('Event listeners added');
+    });
