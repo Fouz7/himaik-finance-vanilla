@@ -203,3 +203,5 @@ function submitForm(type, data) {
       alert("Error: There was a problem submitting the data.");
     });
 }
+
+console.log("Dashboard script loaded");

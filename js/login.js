@@ -51,3 +51,5 @@ fetch("html/components/login-card.html")
     });
   })
   .catch((error) => console.error("Error loading component:", error));
+
+console.log("Dashboard script loaded");

@@ -341,3 +341,5 @@ document.addEventListener("DOMContentLoaded", function () {
     defaultTab.click();
   }
 });
+
+console.log("Dashboard script loaded");
