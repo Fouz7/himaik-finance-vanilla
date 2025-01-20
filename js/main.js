@@ -2,22 +2,22 @@ let currentPage = 1;
 const pageSize = 10;
 
 // Get the cookie
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
+// function getCookie(name) {
+//   const value = `; ${document.cookie}`;
+//   const parts = value.split(`; ${name}=`);
+//   if (parts.length === 2) return parts.pop().split(";").shift();
+// }
 
 // Check if the user is logged in
-const token = getCookie("token");
+// const token = getCookie("token");
 
-if (token) {
-  if (window.location.pathname !== "/dashboard.html") {
-    window.location.href = "dashboard.html";
-  }
-} else if (window.location.pathname !== "/index.html") {
-  window.location.href = "index.html";
-}
+// if (token) {
+//   if (window.location.pathname !== "/dashboard.html") {
+//     window.location.href = "dashboard.html";
+//   }
+// } else if (window.location.pathname !== "/index.html") {
+//   window.location.href = "index.html";
+// }
 
 // Function to load CSS dynamically
 function loadCSS(url) {
