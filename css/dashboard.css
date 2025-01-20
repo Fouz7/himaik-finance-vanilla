@@ -13,10 +13,6 @@ main {
     margin: 0.5rem 0.5rem 0.5rem 0.5rem;
 }
 
-.hidden {
-    display: none;
-}
-
 .dashboard-container {
     background-color: var(--background-color);
     border-radius: 12px;
@@ -168,4 +164,114 @@ button {
     height: 2px;
     width: 100%;
     margin-bottom: 0.5rem;
+}
+
+.dialog {
+    display: none;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    flex-direction: column;
+    padding: 1rem;
+    width: 300px;
+    max-width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dialog #dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dialog form label {
+    font-weight: bold;
+}
+
+.dialog form input {
+    border: none;
+    border-bottom: 1.5px solid var(--text-color);
+    background-color: transparent;
+    color: var(--text-color);
+    padding: 0.5rem;
+}
+
+.dialog form input::placeholder {
+    color: var(--text-color);
+}
+
+.dialog form input:focus {
+    outline: none;
+}
+
+.dialog form button {
+    background-color: var(--secondary-background-color);
+    border: none;
+    border-radius: 6px;
+    color: var(--background-color);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.confirm-dialog {
+    display: none;
+    background-color: var(--background-color);
+    border: none;
+    border-radius: 12px;
+    color: var(--text-color);
+    flex-direction: column;
+    padding: 1rem;
+    width: fit-content;
+    max-width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+.confirm-dialog #confirm-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-self: flex-end;
+}
+
+.confirm-dialog button {
+    background-color: transparent;
+    border: 2px solid;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+
+.cancel-button {
+    border-color: #CC770E;
+    color: #CC770E;
+}
+
+.submit-button {
+    border-color: var(--text-color);
+    color: var(--text-color);
+}
+
+.label {
+    font-weight: bold;
 }

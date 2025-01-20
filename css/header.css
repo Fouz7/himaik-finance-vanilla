@@ -21,3 +21,9 @@
     border: none;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .dashboard-button {
+        display: none;
+    }
+}
